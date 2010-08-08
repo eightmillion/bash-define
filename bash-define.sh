@@ -39,38 +39,38 @@ define() {
 
     if [ $# -eq 1 ]; then
         if [ "$1" == "showdb" ]; then
-            ret="$(curl $CURL_OPTS ${url}/show:db | tail -n +3 | head -n -2 | sed 's/^110.//')"
+            ret="$(curl $CURL_OPTS "${url}/show:db" | tail -n +3 | head -n -2 | sed 's/^110.//')"
         else
             #Lookup word
-            ret="$(curl $CURL_OPTS ${url}/d:$1 | tail -n +3 | head -n -2 | sed 's/^15[0-2].//')"
+            ret="$(curl $CURL_OPTS "${url}/d:$1" | tail -n +3 | head -n -2 | sed 's/^15[0-2].//')"
         fi
     fi  
     
     if [ $# -eq 2 ]; then
         case "$2" in 
-        "suf")
+        [Ss][Uu][Ff])
             #Match by suffix
             match="suffix"
-            ret="$(curl $CURL_OPTS ${url}/m:$1::${match} | tail -n +3 | head -n -2 | sed 's/^15[0-2].//')"
+            ret="$(curl $CURL_OPTS "${url}/m:$1::${match}" | tail -n +3 | head -n -2 | sed 's/^15[0-2].//')"
         ;;  
-        "pre")
+        [Pp][Rr][Ee])
             #Match by prefix
             match="prefix";
-            ret="$(curl $CURL_OPTS ${url}/m:$1::${match} | tail -n +3 | head -n -2 | sed 's/^15[0-2].//')"
+            ret="$(curl $CURL_OPTS "${url}/m:$1::${match}" | tail -n +3 | head -n -2 | sed 's/^15[0-2].//')"
         ;;  
-        "sub")
+        [Ss][Uu][Bb])
             #Match by substring
             match="substring";
-            ret="$(curl $CURL_OPTS ${url}/m:$1::${match} | tail -n +3 | head -n -2 | sed 's/^15[0-2].//')"
+            ret="$(curl $CURL_OPTS "${url}/m:$1::${match}" | tail -n +3 | head -n -2 | sed 's/^15[0-2].//')"
         ;;  
-        "re")
+        [Rr][Ee])
             #Regular expression match
             match="re";
-            ret="$(curl $CURL_OPTS ${url}/m:$1::${match} | tail -n +3 | head -n -2 | sed 's/^15[0-2].//')"
+            ret="$(curl $CURL_OPTS "${url}/m:$1::${match}" | tail -n +3 | head -n -2 | sed 's/^15[0-2].//')"
         ;;  
         *)
             #Use specific databse for lookup
-            ret="$(curl $CURL_OPTS ${url}/d:$1:$2 | tail -n +3 | head -n -2 | sed 's/^15[0-2].//')"
+            ret="$(curl $CURL_OPTS "${url}/d:$1:$2" | tail -n +3 | head -n -2 | sed 's/^15[0-2].//')"
         ;;  
         esac
     fi  
